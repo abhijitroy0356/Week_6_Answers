@@ -1,31 +1,22 @@
-import { useState, useCallback, memo } from "react";
+import { useEffect, useRef } from "react";
+
+// Create a component with a text input field and a button. When the component mounts or the button is clicked, automatically focus the text input field using useRef.
 
 export function Assignment1() {
-  const [count, setCount] = useState(0);
+    const inputRef= useRef()
 
-  // Use useCallback to memoize the functions
-  const handleIncrement = useCallback(() => {
-    setCount((count) => count + 1);
-  }, [count]);
+    useEffect(() => {
+        inputRef.current.focus()
+    }, [inputRef]);
 
-  const handleDecrement = useCallback(() => {
-    setCount((count) => count - 1);
-  }, [count]);
+    const handleButtonClick = () => {
+       inputRef.current.focus()
+    };
 
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <CounterButtons
-        onIncrement={handleIncrement}
-        onDecrement={handleDecrement}
-      />
-    </div>
-  );
-}
-
-const CounterButtons = memo(({ onIncrement, onDecrement }) => (
-  <div>
-    <button onClick={onIncrement}>Increment</button>
-    <button onClick={onDecrement}>Decrement</button>
-  </div>
-));
+    return (
+        <div>
+            <input ref={inputRef}type="text" placeholder="Enter text here" />
+            <button onClick={handleButtonClick}>Focus Input</button>
+        </div>
+    );
+};
